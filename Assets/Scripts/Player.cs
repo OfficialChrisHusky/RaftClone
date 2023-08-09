@@ -6,13 +6,13 @@ public class Player : MonoBehaviour {
     void Awake() { instance = this; }
 
     public bool gameStarted = false;
+    public Transform head;
 
-    [SerializeField] private Hook hook;
 
     void Update() {
         
-        if (!gameStarted && Input.GetKeyDown(KeyCode.Mouse0)) gameStarted = true;
-        if (!Player.instance.gameStarted) return;
+        if (!gameStarted && Input.GetKeyDown(KeyCode.Mouse0)) { gameStarted = true; return; }
+        if (!gameStarted) return;
 
     }
 

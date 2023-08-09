@@ -9,7 +9,6 @@ public class Movement : MonoBehaviour {
     [SerializeField] private float jumpForce = 10.0f;
 
     [Header("Looking Around")]
-    [SerializeField] private Transform head;
     [SerializeField] private float sensitivity = 1.0f;
 
     [Header("Ground Detection")]
@@ -44,7 +43,7 @@ public class Movement : MonoBehaviour {
         mouseRotation.x  = Mathf.Clamp(mouseRotation.x, -90.0f, 90.0f);
 
         transform.rotation = Quaternion.Euler(0.0f, mouseRotation.y, 0.0f);
-        head.rotation = Quaternion.Euler(mouseRotation.x, mouseRotation.y, 0.0f);
+        Player.instance.head.rotation = Quaternion.Euler(mouseRotation.x, mouseRotation.y, 0.0f);
 
         grounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if(grounded && Input.GetKeyDown(KeyCode.Space)) {

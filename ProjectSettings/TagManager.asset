@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Raft
+  - Hook
+  - Catchable
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -11,7 +15,7 @@ TagManager:
   - Raft
   - Water
   - UI
-  - 
+  - Hook
   - 
   - 
   - 
