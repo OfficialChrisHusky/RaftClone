@@ -22,6 +22,19 @@ public class ItemSlot : MonoBehaviour {
         icon.gameObject.SetActive(true);
 
     }
+    public void RemoveItem(Item item, uint amount) {
+
+        this.amount -= amount;
+        if (this.amount < 1) {
+
+            this.item = null;
+            this.amount = 0;
+            icon.gameObject.SetActive(false);
+
+        }
+        amountTxt.text = this.amount.ToString();
+
+    }
 
     public Item Item { get { return item;} }
     public uint Amount { get { return amount;} }
