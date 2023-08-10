@@ -4,7 +4,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour {
     
     public static Inventory instance;
-    void Awake() { instance = this;}
+    void Awake() { instance = this; }
 
     [SerializeField] private bool open = false;
     [SerializeField] private Dictionary<uint, uint> items = new Dictionary<uint, uint>();
@@ -152,5 +152,7 @@ public class Inventory : MonoBehaviour {
         OpenInventory();
 
     }
+
+    public Item ItemFromID(uint itemID) { return allItems[(int) itemID]; }
     
 }

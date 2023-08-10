@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Hook : MonoBehaviour {
@@ -6,6 +7,8 @@ public class Hook : MonoBehaviour {
     [SerializeField] private float throwForce = 20.0f;
     [SerializeField] private bool canRetract = false;
     [SerializeField] private float retractSpeed = 1.0f;
+
+    [SerializeField] private List<Catchable> catched = new List<Catchable>();
 
     private Rigidbody rb;
 
@@ -33,6 +36,12 @@ public class Hook : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.Mouse0)) Retract(new Vector3(Player.instance.transform.position.x, transform.position.y, Player.instance.transform.position.z));
 
+        foreach (Catchable catchable in catched) {
+
+            catchable.transform.position = transform.position;
+
+        }
+
     }
 
     private void Throw() {
@@ -49,7 +58,8 @@ public class Hook : MonoBehaviour {
         if (!thrown) return;
         if (!canRetract) return;
 
-        rb.AddForce((destination - transform.position).normalized * retractSpeed);
+        Vector3 moveForce = (destination - transform.position).normalized * retractSpeed;
+        transform.position = Vector3.MoveTowards(transform.position, destination, retractSpeed * Time.deltaTime);
 
     }
 
@@ -63,14 +73,28 @@ public class Hook : MonoBehaviour {
         transform.parent = parent;
         transform.localPosition = new Vector3(0.0f, 0.4f, 1.6f);
 
+        foreach (Catchable catchable in catched) {
+
+            Inventory.instance.AddItem(catchable.Item, catchable.Amount);
+            CatchableManager.instance.RemoveCatchable(catchable);
+
+        }
+        catched.Clear();
+
     }
 
     void OnTriggerEnter(Collider other) {
 
         if (!thrown) return;
         
-        if(other.tag == "Catchable") Debug.Log("Catched Something!");
-        else if(other.tag == "Water") canRetract = true;
+        if(other.tag == "Catchable") {
+            
+            catched.Add(other.GetComponent<Catchable>());
+
+            other.transform.position = transform.position;
+            other.enabled = false;
+
+        } else if(other.tag == "Water") canRetract = true;
 
     }
     void OnCollisionEnter(Collision other) {
@@ -78,7 +102,5 @@ public class Hook : MonoBehaviour {
         if(other.gameObject.tag == "Raft" || other.gameObject.tag == "Player") FinishRetract();
 
     }
-
-    public bool Thrown() { return thrown; }
 
 }
