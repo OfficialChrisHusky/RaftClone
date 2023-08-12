@@ -15,7 +15,7 @@ public class ItemSlot : MonoBehaviour {
         this.item = item;
         this.amount += amount;
 
-        icon.color = this.item.color;
+        icon.sprite = this.item.Icon;
         amountTxt.text = this.amount.ToString();
         
         if (icon.gameObject.activeSelf) return;
@@ -33,6 +33,12 @@ public class ItemSlot : MonoBehaviour {
 
         }
         amountTxt.text = this.amount.ToString();
+
+    }
+
+    public void Use() {
+
+        item.Use();
 
     }
 

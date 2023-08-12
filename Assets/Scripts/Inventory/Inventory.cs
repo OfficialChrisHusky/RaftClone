@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Inventory : MonoBehaviour {
     
@@ -11,16 +13,36 @@ public class Inventory : MonoBehaviour {
 
     [Header("Static")]
     [SerializeField] private List<Item> allItems = new List<Item>();
+    [SerializeField] private List<Recipe> recipes = new List<Recipe>();
     [SerializeField] private List<ItemSlot> slots = new List<ItemSlot>();
 
     [Header("UI")]
     [SerializeField] private GameObject inventoryUI;
 
+    [Header("Item Description UI")]
+    [SerializeField] private GameObject itemDescriptionPanel;
+    [SerializeField] private Image itemIcon;
+    [SerializeField] private TMP_Text itemName;
+    [SerializeField] private TMP_Text itemDescription;
+
+    [Header("Recipes")]
+    [SerializeField] private GameObject recipeSlotPrefab;
+    [SerializeField] private GameObject craftButton;
+    [SerializeField] private Transform recipeParent;
+
     private List<int> emptySlots = new List<int>();
+    private Recipe currentRecipe;
 
     void Start() {
         
         for(int i = 0; i < slots.Count; i++) { emptySlots.Add(i); }
+
+        foreach (Recipe recipe in recipes) {
+
+            RecipeSlot slot = Instantiate(recipeSlotPrefab, recipeParent).GetComponent<RecipeSlot>();
+            slot.Setup(recipe);
+
+        }
 
     }
 
@@ -75,17 +97,14 @@ public class Inventory : MonoBehaviour {
         }
 
         // If we werent able to fit all of the items into the inventory
-        if (amountToAdd > 0) {
-
-            if (items.ContainsKey(itemID)) { items[itemID] += amount - amountToAdd; }
-            else { items.Add(itemID, amount - amountToAdd); }
-            return;
-
-        }
+        if (amountToAdd > 0) amountToAdd = amount - amountToAdd;
+        else amountToAdd = amount;
 
         // We were successfully able to add all of the items into the inventory
-        if (items.ContainsKey(itemID)) { items[itemID] += amount; }
-        else { items.Add(itemID, amount); }
+        if (items.ContainsKey(itemID)) { items[itemID] += amountToAdd; }
+        else { items.Add(itemID, amountToAdd); }
+
+        // Display a popup saying what item and how much we got
 
     }
 
@@ -131,6 +150,34 @@ public class Inventory : MonoBehaviour {
 
     }
 
+    public void ShowItemDescription(Item item) {
+
+        itemIcon.sprite = item.Icon;
+        itemName.text = item.Name;
+        itemDescription.text = item.Description;
+
+        itemDescriptionPanel.SetActive(true);
+        craftButton.SetActive(false);
+
+    }
+    public void ShowRecipeDescription(Recipe recipe) {
+
+        currentRecipe = recipe;
+        itemIcon.sprite = recipe.Result.Icon;
+        itemName.text = recipe.Result.Name;
+        itemDescription.text = recipe.Result.Description + "\n\n" + recipe.IngredientsToString();
+
+        itemDescriptionPanel.SetActive(true);
+        craftButton.SetActive(true);
+
+    }
+
+    public void CraftCurrentRecipe() {
+
+        currentRecipe.Craft();
+
+    }
+
     private void OpenInventory() {
 
         open = !open;
@@ -140,6 +187,10 @@ public class Inventory : MonoBehaviour {
         Cursor.visible = open;
 
         Player.instance.gamePaused = open;
+
+        itemDescriptionPanel.SetActive(false);
+        craftButton.SetActive(false);
+        currentRecipe = null;
 
     }
 

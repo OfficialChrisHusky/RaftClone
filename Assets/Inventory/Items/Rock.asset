@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   name: Rock
+  description: Rock, what else do you think this will do ?
   id: 1
   stackLimit: 100
+  icon: {fileID: 21300000, guid: 10a40e42942e9ca92954bbe82e5f438e, type: 3}
   mesh: {fileID: 4013275331872712965, guid: 37fcbfd1e56424b84912c5ab4f103be4, type: 3}
   materials:
   - {fileID: 3986188387995331715, guid: 37fcbfd1e56424b84912c5ab4f103be4, type: 3}
-  color: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Plastic
   m_EditorClassIdentifier: 
   name: Plastic
+  description: Crafting material. What jerk threw it into the water ?
   id: 2
   stackLimit: 100
+  icon: {fileID: 21300000, guid: 63542a11fe3488cf09252f68f2038672, type: 3}
   mesh: {fileID: -2501353177796253522, guid: 37fcbfd1e56424b84912c5ab4f103be4, type: 3}
   materials:
   - {fileID: -389402008792246631, guid: 37fcbfd1e56424b84912c5ab4f103be4, type: 3}
-  color: {r: 0.9872395, g: 1, b: 0.6273585, a: 1}

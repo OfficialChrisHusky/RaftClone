@@ -10,22 +10,26 @@ public class Player : MonoBehaviour {
     public bool gamePaused = false;
     public Transform head;
 
-    [SerializeField] private int minItemsWhenAdd = 1;
-    [SerializeField] private int maxItemsWhenAdd = 10;
+    [SerializeField] private GameObject hook;
+    [SerializeField] private GameObject hammer;
+
+    bool tmp = false;
 
     void Update() {
         
-        if (!gameStarted && Input.GetKeyDown(KeyCode.Mouse0)) { gameStarted = true; return; }
+        if (tmp) { gameStarted = true; }
+        if (!gameStarted && Input.GetKeyDown(KeyCode.Mouse0)) { tmp = true; return; }
         if (!gameStarted) return;
 
-        if(Input.GetKeyDown(KeyCode.X)) {
+        if (Input.GetKeyDown(KeyCode.X)) {
 
-            Inventory.instance.AddItem((uint) Random.Range(0, 2), (uint) Random.Range(minItemsWhenAdd, maxItemsWhenAdd + 1));
+            hook.SetActive(true);
+            hammer.SetActive(false);
 
-        }
-        if(Input.GetKeyDown(KeyCode.Y)) {
+        } else if(Input.GetKeyDown(KeyCode.Y) && Inventory.instance.HasItem(3, 1)) {
 
-            Inventory.instance.RemoveItem((uint) Random.Range(0, 2), (uint) Random.Range(minItemsWhenAdd, maxItemsWhenAdd + 1));
+            hook.SetActive(false);
+            hammer.SetActive(true);
 
         }
 

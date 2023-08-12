@@ -11,6 +11,7 @@ public class Hook : MonoBehaviour {
     [SerializeField] private List<Catchable> catched = new List<Catchable>();
 
     private Rigidbody rb;
+    private Collider collider;
 
     private Vector3 prevPosition;
     private Transform parent;
@@ -18,6 +19,7 @@ public class Hook : MonoBehaviour {
     void Start() {
         
         rb = GetComponent<Rigidbody>();
+        collider = GetComponent<Collider>();
         parent = transform.parent;
 
     }
@@ -50,6 +52,7 @@ public class Hook : MonoBehaviour {
         rb.useGravity = true;
         rb.isKinematic = false;
         rb.AddForce(transform.parent.forward * throwForce, ForceMode.Impulse);
+        collider.enabled = true;
         transform.parent = null;
 
     }
@@ -69,6 +72,7 @@ public class Hook : MonoBehaviour {
         canRetract = false;
         rb.useGravity = false;
         rb.isKinematic = true;
+        collider.enabled = false;
 
         transform.parent = parent;
         transform.localPosition = new Vector3(0.5f, -0.4f, 0.6f);
