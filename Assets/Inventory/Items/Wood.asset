@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Wood
   id: 0
+  stackLimit: 100
+  mesh: {fileID: -293502825896984990, guid: 37fcbfd1e56424b84912c5ab4f103be4, type: 3}
+  materials:
+  - {fileID: -1444460858095362738, guid: 37fcbfd1e56424b84912c5ab4f103be4, type: 3}
   color: {r: 0.38679248, g: 0.23838048, b: 0.031016383, a: 1}

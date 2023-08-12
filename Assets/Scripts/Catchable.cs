@@ -10,6 +10,9 @@ public class Catchable : MonoBehaviour {
         this.item = item;
         this.amount = amount;
 
+        transform.GetChild(0).GetComponent<MeshFilter>().mesh = item.Mesh;
+        transform.GetChild(0).GetComponent<MeshRenderer>().materials = item.Materials.ToArray();
+
     }
 
     void Update() {

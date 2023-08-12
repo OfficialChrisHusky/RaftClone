@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548bd25867f80cdf8a2e4f6c3b726855, type: 3}
-  m_Name: Rock
+  m_Name: Plastic
   m_EditorClassIdentifier: 
-  name: Rock
-  id: 1
+  name: Plastic
+  id: 2
   stackLimit: 100
-  mesh: {fileID: 4013275331872712965, guid: 37fcbfd1e56424b84912c5ab4f103be4, type: 3}
+  mesh: {fileID: -2501353177796253522, guid: 37fcbfd1e56424b84912c5ab4f103be4, type: 3}
   materials:
-  - {fileID: 3986188387995331715, guid: 37fcbfd1e56424b84912c5ab4f103be4, type: 3}
-  color: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  - {fileID: -389402008792246631, guid: 37fcbfd1e56424b84912c5ab4f103be4, type: 3}
+  color: {r: 0.9872395, g: 1, b: 0.6273585, a: 1}

@@ -26,15 +26,15 @@ public class Hook : MonoBehaviour {
         if (!Player.instance.gameStarted || Player.instance.gamePaused) return;
         if (!thrown) {
 
-            transform.localPosition = new Vector3(0.0f, 0.4f, 1.5f);
-            transform.localRotation = Quaternion.identity;
-            transform.localScale = new Vector3(1.0f, 0.2f, 2.0f);
+            transform.localPosition = new Vector3(0.5f, -0.4f, 0.6f);
+            transform.localRotation = Quaternion.Euler(180.0f, 90.0f, 0.0f);
+            transform.localScale = new Vector3(25.0f, 25.0f, 25.0f);
 
             if(Input.GetKeyDown(KeyCode.Mouse0)) Throw();
             return;
             
         }
-        if (Input.GetKey(KeyCode.Mouse0)) Retract(new Vector3(Player.instance.transform.position.x, transform.position.y, Player.instance.transform.position.z));
+        if (Input.GetKey(KeyCode.Mouse0)) Retract(new Vector3(Player.instance.transform.position.x, 0.12f, Player.instance.transform.position.z));
 
         foreach (Catchable catchable in catched) {
 
@@ -49,8 +49,8 @@ public class Hook : MonoBehaviour {
         thrown = true;
         rb.useGravity = true;
         rb.isKinematic = false;
+        rb.AddForce(transform.parent.forward * throwForce, ForceMode.Impulse);
         transform.parent = null;
-        rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
 
     }
     private void Retract(Vector3 destination) {
@@ -71,7 +71,7 @@ public class Hook : MonoBehaviour {
         rb.isKinematic = true;
 
         transform.parent = parent;
-        transform.localPosition = new Vector3(0.0f, 0.4f, 1.6f);
+        transform.localPosition = new Vector3(0.5f, -0.4f, 0.6f);
 
         foreach (Catchable catchable in catched) {
 
@@ -99,7 +99,9 @@ public class Hook : MonoBehaviour {
     }
     void OnCollisionEnter(Collision other) {
         
-        if(other.gameObject.tag == "Raft" || other.gameObject.tag == "Player") FinishRetract();
+        if (!thrown) return;
+
+        if(canRetract && (other.gameObject.tag == "Raft" || other.gameObject.tag == "Player")) FinishRetract();
 
     }
 

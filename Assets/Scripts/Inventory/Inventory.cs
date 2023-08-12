@@ -27,8 +27,6 @@ public class Inventory : MonoBehaviour {
     public void AddItem(Item item, uint amount = 1) { AddItem(item.ID, amount); }
     public void AddItem(uint itemID, uint amount = 1) {
 
-        Debug.Log(itemID + ": " + amount);
-
         uint amountToAdd = amount;
 
         // Try to Fill slots that already have the requested item
